@@ -4,6 +4,10 @@ Aplicación web full-stack para controlar las finanzas personales: registra ingr
 
 ![CI](https://github.com/dylannkeys/finanzas-app/actions/workflows/ci.yml/badge.svg)
 
+**[Ver demo en vivo →](https://finanzas-app-six-sigma.vercel.app)** · Cuenta demo: `demo@finanzas.app` / `demo12345`
+
+> La API está en el plan gratuito de Render: si lleva un rato sin uso, el primer inicio de sesión puede tardar hasta un minuto.
+
 <p align="center">
   <img src="docs/resumen.jpg" alt="Panel de resumen con totales del mes, gráfico de 6 meses y gastos por categoría" width="720" />
 </p>
