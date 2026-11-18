@@ -73,11 +73,8 @@ Todas las rutas, salvo las de autenticación, requieren la cabecera `Authorizati
 ## Despliegue gratuito
 
 1. **Base de datos**: crea un proyecto en [Neon](https://neon.tech) y copia la cadena de conexión.
-2. **API** en [Render](https://render.com) (Web Service):
-   - Build: `npm install && npm run build -w server`
-   - Start: `npm start -w server`
-   - Variables: `NODE_ENV=production`, `DATABASE_URL`, `JWT_SECRET` (32+ caracteres aleatorios) y `CLIENT_ORIGIN` (la URL del frontend).
-3. **Frontend** en [Vercel](https://vercel.com): directorio raíz `client`, variable `VITE_API_URL` con la URL de la API.
+2. **API** en [Render](https://render.com): *New → Blueprint* y elige el repositorio. El archivo [`render.yaml`](render.yaml) lo configura todo (genera `JWT_SECRET` y regenera la cuenta demo en cada arranque con `SEED_DEMO=1`). Solo pide `DATABASE_URL` y `CLIENT_ORIGIN` (la URL del frontend).
+3. **Frontend** en [Vercel](https://vercel.com): importa el repositorio con directorio raíz `client` y la variable `VITE_API_URL` con la URL de la API. [`client/vercel.json`](client/vercel.json) redirige las rutas de la app a `index.html`.
 
 > En el plan gratuito de Render la API se suspende tras un rato sin uso; la primera petición puede tardar unos segundos.
 

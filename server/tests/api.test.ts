@@ -2,6 +2,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import request from "supertest";
 import { createApp } from "../src/app.js";
 import { createDb, type Db } from "../src/db.js";
+import { DEMO_EMAIL, DEMO_PASSWORD, seedDemo } from "../src/demo.js";
 
 // Cada ejecución usa una base PGlite en memoria: los tests no necesitan PostgreSQL instalado.
 let db: Db;
@@ -141,6 +142,22 @@ describe("movimientos", () => {
       .set("Authorization", `Bearer ${luis}`)
       .send({ categoryId: comidaAna, amount: 5, date: "2026-03-01" });
     expect(steal.status).toBe(400);
+  });
+});
+
+describe("cuenta demo", () => {
+  it("se regenera sin duplicarse y permite iniciar sesión", async () => {
+    const first = await seedDemo(db);
+    const second = await seedDemo(db);
+    expect(second).toBe(first);
+    expect(first).toBeGreaterThan(50);
+
+    const login = await request(app).post("/api/auth/login").send({ email: DEMO_EMAIL, password: DEMO_PASSWORD });
+    expect(login.status).toBe(200);
+    const list = await request(app)
+      .get("/api/transactions?limit=500")
+      .set("Authorization", `Bearer ${login.body.token}`);
+    expect(list.body).toHaveLength(first);
   });
 });
 

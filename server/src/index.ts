@@ -1,5 +1,6 @@
 import { createApp } from "./app.js";
 import { createDb } from "./db.js";
+import { seedDemo } from "./demo.js";
 
 const isProduction = process.env.NODE_ENV === "production";
 // En producción (Render, Railway...) el proveedor indica el puerto con PORT.
@@ -22,7 +23,17 @@ const clientOrigins = (process.env.CLIENT_ORIGIN ?? "http://localhost:5173")
   .filter(Boolean);
 
 const databaseUrl = process.env.DATABASE_URL || undefined;
+if (isProduction && !databaseUrl) {
+  console.error("DATABASE_URL es obligatoria en producción.");
+  process.exit(1);
+}
 const db = await createDb(databaseUrl ? { url: databaseUrl } : { dataDir: "./data" });
+
+// Con SEED_DEMO=1 la cuenta demo se regenera en cada arranque (datos frescos y sin cambios de visitantes).
+if (process.env.SEED_DEMO === "1") {
+  const count = await seedDemo(db);
+  console.log(`Cuenta demo regenerada (${count} movimientos).`);
+}
 
 const app = createApp({ db, jwtSecret, clientOrigins });
 const server = app.listen(port, () => {

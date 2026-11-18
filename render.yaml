@@ -1,0 +1,23 @@
+# Blueprint de Render para la API (plan gratuito).
+# En Render: New > Blueprint > elige este repositorio.
+services:
+  - type: web
+    name: finanzas-api
+    runtime: node
+    plan: free
+    buildCommand: npm ci --include=dev && npm run build -w server
+    startCommand: npm start -w server
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: SEED_DEMO
+        value: "1"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: CLIENT_ORIGIN
+        sync: false
