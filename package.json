@@ -1,0 +1,20 @@
+{
+  "name": "finanzas-app",
+  "private": true,
+  "description": "App full-stack de finanzas personales: React + TypeScript, Express y PostgreSQL.",
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev": "concurrently -n api,web -c cyan,magenta \"npm run dev -w server\" \"npm run dev -w client\"",
+    "build": "npm run build -w server && npm run build -w client",
+    "test": "npm test -w server",
+    "lint": "npm run typecheck -w server && npm run typecheck -w client",
+    "seed": "npm run seed -w server"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^10.0.7"
+  }
+}

@@ -1,0 +1,17 @@
+node_modules/
+dist/
+coverage/
+
+# Base de datos local de PGlite
+server/data/
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
